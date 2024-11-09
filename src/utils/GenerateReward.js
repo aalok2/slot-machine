@@ -19,7 +19,7 @@ export function generateReward() {
     Consumable: [
       { name: "Med Kit", image: IMG4 },
       { name: "Potion", image: IMG5 },
-      { name: "Grenade", IMG6 },
+      { name: "Grenade", image: IMG6 },
       // Add more consumables here
     ],
     Material: [
@@ -39,7 +39,7 @@ export function generateReward() {
   return {
     type: selectedType,
     name: item.name,
-    image: {src: item.image},
+    image: { src: item.image },
     rarity: rarities[Math.floor(Math.random() * rarities.length)],
     count: Math.floor(Math.random() * 5) + 1,
   };
