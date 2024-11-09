@@ -23,7 +23,8 @@ const Result = ({ result }) => {
   return (
     <ResultContainer>
       <ResultTitle>✨ You Won! ✨</ResultTitle>
-      <p>Item: {result.item}</p>
+      <p>Name: {result.name}</p>
+      <p>Type: {result.type}</p>
       <p>Rarity: {result.rarity}</p>
       <p>Count: {result.count}</p>
     </ResultContainer>

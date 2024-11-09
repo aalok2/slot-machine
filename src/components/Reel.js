@@ -1,6 +1,15 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-
+import IMG1 from "../images/ak-47.png";
+import IMG2 from "../images/m4.png";
+import IMG3 from "../images/sniper.png";
+import IMG4 from "../images/medkit.png";
+import IMG5 from "../images/potion.png";
+import IMG6 from "../images/grenade.png";
+import IMG7 from "../images/stone.png";
+import IMG8 from "../images/wood.png";
+import IMG9 from "../images/metal.png";
+// Reel container styling
 const ReelContainer = styled.div`
   width: 100px;
   height: 100px;
@@ -17,15 +26,7 @@ const ReelContainer = styled.div`
   overflow: hidden;
 `;
 
-// Placeholder animation items
-const SpinningItem = styled.div`
-  font-weight: bold;
-  font-size: 2rem;
-  color: #f1c40f;
-  animation: ${(props) =>
-    props.isSpinning ? "move 0.2s linear infinite" : "none"};
-`;
-
+// Spinning animation keyframes
 const reelSpin = keyframes`
   0% { transform: translateY(0); }
   100% { transform: translateY(-100%); }
@@ -38,20 +39,49 @@ const SpinningWrapper = styled.div`
     infinite;
 `;
 
+const ItemImage = styled.img`
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+`;
+
+// Reel component
 const Reel = ({ isSpinning, resultItem }) => {
-  // Array of placeholder items shown during spin
-  const placeholders = ["🍒", "🍋", "🍊", "🍉"];
+  // Placeholder images for spinning, categorized by type
+  const placeholderImages = {
+    weapons: [
+      { src: IMG1, alt: "AK-47" },
+      { src: IMG2, alt: "M4" },
+      { src: IMG3, alt: "Sniper" },
+    ],
+    consumables: [
+      { src: IMG4, alt: "Medkit" },
+      { src: IMG6, alt: "Grenade" },
+      { src: IMG5, alt: "Potion" },
+    ],
+    materials: [
+      { src:IMG8, alt: "Wood" },
+      { src: IMG9, alt: "Metal" },
+      { src:IMG7, alt: "Stone" },
+    ],
+  };
+
+  // Randomly select a placeholder category and item when spinning
+  const randomCategory =
+    Object.keys(placeholderImages)[Math.floor(Math.random() * 3)];
+  const placeholders = placeholderImages[randomCategory];
 
   return (
     <ReelContainer>
       {isSpinning ? (
         <SpinningWrapper isSpinning={isSpinning}>
           {placeholders.map((item, index) => (
-            <SpinningItem key={index}>{item}</SpinningItem>
+            <ItemImage key={index} src={item.src} alt={item.alt} />
           ))}
         </SpinningWrapper>
       ) : (
-        <SpinningItem>{resultItem}</SpinningItem> // Display the result when spinning stops
+        // Show the result item as an image when spinning stops
+        <ItemImage src={resultItem.src} alt={resultItem.alt} />
       )}
     </ReelContainer>
   );

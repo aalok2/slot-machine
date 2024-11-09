@@ -93,37 +93,34 @@ const SlotMachine = () => {
   };
 
   return (
-    <SlotMachineContainer>
-      <Title>🎰 Slot Machine 🎰</Title>
+    <div>
+      <SlotMachineContainer>
+        <Title>🎰 Slot Machine 🎰</Title>
 
+        <div className="reels">
+          <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
+          <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
+          <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
+        </div>
+
+        <Lever />
+        <SpinButton onClick={handleSpin} disabled={isSpinning}>
+          {isSpinning ? "Spinning..." : "Spin"}
+        </SpinButton>
+
+        {/* Render Result only when spin is finished and result is valid */}
+        {!isSpinning && result && <Result result={result} />}
+        {console.log(result)}
+      </SlotMachineContainer>
       {showConfetti && (
         <Confetti
+          width={window.innerWidth} // Set the width to full screen width
+          height={window.innerHeight} // Set the height to full screen height
           recycle={false}
-          numberOfPieces={300}
-          confettiSource={{
-            x: window.innerWidth / 6,
-            y: 50,
-            w: 100,
-            h: 100,
-          }}
+          numberOfPieces={3000} // Adjust the number of pieces if needed
         />
       )}
-
-      <div className="reels">
-        <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
-        <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
-        <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
-      </div>
-
-      <Lever />
-      <SpinButton onClick={handleSpin} disabled={isSpinning}>
-        {isSpinning ? "Spinning..." : "Spin"}
-      </SpinButton>
-
-      {/* Render Result only when spin is finished and result is valid */}
-      {!isSpinning && result && <Result result={result} />}
-      {console.log(result)}
-    </SlotMachineContainer>
+    </div>
   );
 };
 
