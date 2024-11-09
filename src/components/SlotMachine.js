@@ -68,7 +68,7 @@ const SpinButton = styled.button`
 `;
 
 const SlotMachine = () => {
-  const [result, setResult] = useState([null, null, null]);
+  const [result, setResult] = useState(null); // Set to null initially
   const [isSpinning, setIsSpinning] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -77,22 +77,17 @@ const SlotMachine = () => {
   const handleSpin = () => {
     setIsSpinning(true);
     setShowConfetti(false);
+    setResult(null); // Clear the previous result
 
     spinAudio.play();
 
-    const rewards = generateReward(); // ['Weapon', 'Consumable', 'Material']
-
-    console.log("Generated Rewards:", rewards); // Log the generated rewards
+    const rewards = generateReward(); // Ensure this returns the correct reward format
 
     setTimeout(() => {
       setResult(rewards); // Set the result after the spin
-      console.log("Result after spin:", rewards); // Log the result after updating the state
-
       setIsSpinning(false);
-
       spinAudio.pause();
       spinAudio.currentTime = 0;
-
       setShowConfetti(true); // Show confetti after spin completes
     }, 2000);
   };
@@ -101,31 +96,33 @@ const SlotMachine = () => {
     <SlotMachineContainer>
       <Title>🎰 Slot Machine 🎰</Title>
 
-      {/* Full-screen Confetti */}
       {showConfetti && (
         <Confetti
-          width={window.innerWidth} // Set the width to full screen width
-          height={window.innerHeight} // Set the height to full screen height
           recycle={false}
-          numberOfPieces={5000} // Adjust the number of pieces if needed
+          numberOfPieces={300}
+          confettiSource={{
+            x: window.innerWidth / 6,
+            y: 50,
+            w: 100,
+            h: 100,
+          }}
         />
       )}
 
       <div className="reels">
-        <Reel isSpinning={isSpinning} resultItem={result[0]} />
-        <Reel isSpinning={isSpinning} resultItem={result[1]} />
-        <Reel isSpinning={isSpinning} resultItem={result[2]} />
+        <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
+        <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
+        <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
       </div>
-
-      {/* Render Result only when spin is finished */}
-      {!isSpinning && result && result[0] && (
-        <Result result={{ item: result[0], rarity: "Common", count: 1 }} />
-      )}
 
       <Lever />
       <SpinButton onClick={handleSpin} disabled={isSpinning}>
         {isSpinning ? "Spinning..." : "Spin"}
       </SpinButton>
+
+      {/* Render Result only when spin is finished and result is valid */}
+      {!isSpinning && result && <Result result={result} />}
+      {console.log(result)}
     </SlotMachineContainer>
   );
 };
