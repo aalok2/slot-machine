@@ -6,6 +6,7 @@ import Confetti from "react-confetti";
 import { generateReward } from "../utils/GenerateReward";
 import spinSound from "../sounds/spin-sound.mp3";
 import Result from "./Result"; // Import the Result component
+import image from "../images/ak-47.png";
 
 const SlotMachineContainer = styled.div`
   background: linear-gradient(145deg, #2b2b2b, #1f1f1f);
@@ -68,7 +69,9 @@ const SpinButton = styled.button`
 `;
 
 const SlotMachine = () => {
-  const [result, setResult] = useState(null); // Set to null initially
+  const [result, setResult] = useState({
+    image: {src: image},
+  }); // Set to null initially
   const [isSpinning, setIsSpinning] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -94,13 +97,13 @@ const SlotMachine = () => {
 
   return (
     <div>
-      <SlotMachineContainer>
+      <SlotMachineContainer className="SlotMachineContainer">
         <Title>🎰 Slot Machine 🎰</Title>
 
         <div className="reels">
-          <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
-          <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
-          <Reel isSpinning={isSpinning} resultItem={result?.item || ""} />
+          <Reel isSpinning={isSpinning} resultItem={result?.image || ""} />
+          <Reel isSpinning={isSpinning} resultItem={result?.image || ""} />
+          <Reel isSpinning={isSpinning} resultItem={result?.image || ""} />
         </div>
 
         <Lever />
@@ -109,15 +112,14 @@ const SlotMachine = () => {
         </SpinButton>
 
         {/* Render Result only when spin is finished and result is valid */}
-        {!isSpinning && result && <Result result={result} />}
-        {console.log(result)}
+        {!isSpinning && result.name && <Result result={result} />}
       </SlotMachineContainer>
       {showConfetti && (
         <Confetti
           width={window.innerWidth} // Set the width to full screen width
           height={window.innerHeight} // Set the height to full screen height
           recycle={false}
-          numberOfPieces={3000} // Adjust the number of pieces if needed
+          numberOfPieces={2000} // Adjust the number of pieces if needed
         />
       )}
     </div>

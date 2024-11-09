@@ -18,7 +18,6 @@ const ResultTitle = styled.h2`
 
 const Result = ({ result }) => {
   // Log the result prop when the component renders
-  console.log("Result prop:", result);
 
   return (
     <ResultContainer>

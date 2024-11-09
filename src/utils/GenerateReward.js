@@ -1,21 +1,31 @@
+import IMG1 from "../images/ak-47.png";
+import IMG2 from "../images/m4.png";
+import IMG3 from "../images/sniper.png";
+import IMG4 from "../images/medkit.png";
+import IMG5 from "../images/potion.png";
+import IMG6 from "../images/grenade.png";
+import IMG7 from "../images/stone.png";
+import IMG8 from "../images/wood.png";
+import IMG9 from "../images/metal.png";
+
 export function generateReward() {
   const items = {
     Weapon: [
-      { name: "AK-47", image: "/images/ak47.png" },
-      { name: "M4A1", image: "/images/m4a1.png" },
-      { name: "Shotgun", image: "/images/shotgun.png" },
+      { name: "AK-47", image: IMG1 },
+      { name: "M4", image: IMG2 },
+      { name: "Snipper", image: IMG3 },
       // Add more weapons here
     ],
     Consumable: [
-      { name: "Med Kit", image: "/images/medkit.png" },
-      { name: "Bandage", image: "/images/bandage.png" },
-      { name: "Energy Drink", image: "/images/energydrink.png" },
+      { name: "Med Kit", image: IMG4 },
+      { name: "Potion", image: IMG5 },
+      { name: "Grenade", IMG6 },
       // Add more consumables here
     ],
     Material: [
-      { name: "Steel", image: "/images/steel.png" },
-      { name: "Wood", image: "/images/wood.png" },
-      { name: "Cloth", image: "/images/cloth.png" },
+      { name: "Stone", image: IMG7 },
+      { name: "Wood", image: IMG8 },
+      { name: "Metal", image: IMG9 },
       // Add more materials here
     ],
   };
@@ -29,7 +39,7 @@ export function generateReward() {
   return {
     type: selectedType,
     name: item.name,
-    image: item.image,
+    image: {src: item.image},
     rarity: rarities[Math.floor(Math.random() * rarities.length)],
     count: Math.floor(Math.random() * 5) + 1,
   };
